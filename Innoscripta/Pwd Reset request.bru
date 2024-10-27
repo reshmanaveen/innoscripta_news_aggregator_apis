@@ -1,0 +1,21 @@
+meta {
+  name: Pwd Reset request
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://127.0.0.1:8000/api/password/email
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: 2|7mqyRLPReMuJXYj6A1jTTJcwpthXNUJwuAX2p867e26ccaa2
+}
+
+body:json {
+  {
+    "email":"reshmabelman@gmail.com"
+  }
+}
