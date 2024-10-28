@@ -2,3 +2,5 @@
 News Aggregator API
 
 Run php artisan l5-swagger:generate to generate docs
+
+./vendor/bin/sail artisan migrate

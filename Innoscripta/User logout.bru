@@ -7,12 +7,9 @@ meta {
 post {
   url: http://127.0.0.1:8000/api/logout
   body: json
-  auth: none
+  auth: bearer
 }
 
-body:json {
-  {
-    "email":"reshmabelman@gmail.com",
-    "password":"Math678"
-  }
+auth:bearer {
+  token: 2|7mqyRLPReMuJXYj6A1jTTJcwpthXNUJwuAX2p867e26ccaa2
 }
