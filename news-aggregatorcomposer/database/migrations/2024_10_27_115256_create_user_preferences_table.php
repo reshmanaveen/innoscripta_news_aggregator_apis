@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('user_preferences', function (Blueprint $table) {
             $table->id();
+            $table->string('source')->nullable();
+            $table->string('category')->nullable();
+            $table->foreignId('user_id')
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }

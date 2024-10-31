@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\RegisterController;
@@ -17,6 +18,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', function (Request $request) {
         $request->user()->tokens()->delete();
         return response()->json(['message' => 'Logged out successfully']);});
-
-   // Route::post('/another-protected-route', [YourController::class, 'anotherProtectedMethod']);
-});
+        Route::get('/articles', [ArticleController::class, 'index']);
+        Route::get('/articles/{id}', [ArticleController::class, 'show']);
+    });
