@@ -5,44 +5,41 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use Illuminate\Http\Request;
 
- /**
-     * @OA\Get(
-     *     path="/api/articles",
-     *     summary="Fetch articles with pagination",
-     *     @OA\Parameter(
-     *         name="page",
-     *         in="query",
-     *         required=false,
-     *         @OA\Schema(type="integer", default=1)
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful response",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="current_page", type="integer"),
-     *             @OA\Property(property="data", type="array",
-     *                 @OA\Items(type="string")
-     *             ),
-     *             @OA\Property(property="first_page_url", type="string"),
-     *             @OA\Property(property="last_page", type="integer"),
-     *             @OA\Property(property="last_page_url", type="string"),
-     *             @OA\Property(property="links", type="array",
-     *                 @OA\Items(type="string")
-     *             ),
-     *             @OA\Property(property="next_page_url", type="string"),
-     *             @OA\Property(property="path", type="string"),
-     *             @OA\Property(property="per_page", type="integer"),
-     *             @OA\Property(property="prev_page_url", type="string"),
-     *             @OA\Property(property="total", type="integer"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Not Found"
-     *     )
-     * )
-     */
+/**
+ * @OA\Get(
+ *     path="/articles",
+ *     summary="Fetch articles with pagination",
+ *     tags={"articles"},
+ *     security={{"sanctum": {}}},
+ *     @OA\Response(
+ *         response=200,
+ *         description="Successful response",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(property="current_page", type="integer"),
+ *             @OA\Property(property="data", type="array",
+ *                 @OA\Items(type="string")
+ *             ),
+ *             @OA\Property(property="first_page_url", type="string"),
+ *             @OA\Property(property="last_page", type="integer"),
+ *             @OA\Property(property="last_page_url", type="string"),
+ *             @OA\Property(property="links", type="array",
+ *                 @OA\Items(type="string")
+ *             ),
+ *             @OA\Property(property="next_page_url", type="string"),
+ *             @OA\Property(property="path", type="string"),
+ *             @OA\Property(property="per_page", type="integer"),
+ *             @OA\Property(property="prev_page_url", type="string"),
+ *             @OA\Property(property="total", type="integer"),
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=404,
+ *         description="Not Found"
+ *     )
+ * )
+ */
+
    
 
 class ArticleController extends Controller

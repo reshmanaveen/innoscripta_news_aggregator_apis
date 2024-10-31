@@ -3,24 +3,29 @@
     "info": {
         "title": "News Aggregator API Documentation",
         "description": "News Aggregator API Documentation",
+        "contact": {
+            "email": "admin@admin.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
         "version": "1.0.0"
     },
+    "servers": [
+        {
+            "url": "http://localhost:70/api",
+            "description": "API Server"
+        }
+    ],
     "paths": {
-        "/api/articles": {
+        "/articles": {
             "get": {
-                "summary": "Fetch articles with pagination",
-                "operationId": "658936351861b1e6be24348b68cfd902",
-                "parameters": [
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "integer",
-                            "default": 1
-                        }
-                    }
+                "tags": [
+                    "articles"
                 ],
+                "summary": "Fetch articles with pagination",
+                "operationId": "a18fe99eedbd33cdb4dbbb8b5dac8bb4",
                 "responses": {
                     "200": {
                         "description": "Successful response",
@@ -76,8 +81,29 @@
                     "404": {
                         "description": "Not Found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
             }
         }
-    }
+    },
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "http",
+                "description": "Authentication using Laravel Sanctum",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "articles",
+            "description": "articles"
+        }
+    ]
 }
