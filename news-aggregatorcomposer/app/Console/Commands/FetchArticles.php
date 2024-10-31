@@ -30,6 +30,7 @@ class FetchArticles extends Command
 
         $newsApiKey = config('news.newsapi.api_key');
         $guardianApiKey = config('news.guardian.api_key');
+        $nytApiKey =  config('news.nyt.api_key');
 
         $newsApiResponse = $client->get('https://newsapi.org/v2/top-headlines?country=us&apiKey=' . $newsApiKey);
         $articles = json_decode($newsApiResponse->getBody(), true)['articles'];
@@ -70,6 +71,26 @@ class FetchArticles extends Command
                     'source_id' => null,
                     'published_at' => $publishedAt,
                     'content' => $article['fields']['body'] ?? null,
+                ]
+            );
+        }
+
+
+        $nytResponse = $client->get('https://api.nytimes.com/svc/topstories/v2/home.json?api-key=' . $nytApiKey);
+        $nytArticles = json_decode($nytResponse->getBody(), true);
+
+        foreach ($nytArticles['results'] as $article) {
+            Article::updateOrCreate(
+                ['title' => $article['title']], // Unique field for update or create
+                [
+                    'description' => $article['abstract'] ?? null,
+                    'url' => $article['url'],
+                    'url_to_image' => $article['multimedia'][0]['url'] ?? null, // Get the first multimedia item
+                    'author' => $article['byline'] ?? null,
+                    'source_name' => 'The New York Times',
+                    'source_id' => null, // Optional field
+                    'published_at' => $article['published_date'] ?? null, // Ensure the date format is correct
+                    'content' => null // Add content if available
                 ]
             );
         }

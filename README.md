@@ -11,8 +11,9 @@ API
 
 ## Installation
 
-./vendor/bin/sail artisan migrate
-./vendor/bin/sail artisan l5-swagger:generate
+artisan migrate
+sail artisan l5-swagger:generate
+sail artisan app:fetch-articles
 
 Run php artisan l5-swagger:generate to generate docs
 API Doc Path > http://localhost:8080/api/documentation
