@@ -24,13 +24,14 @@ class StoreUserPreferenceRequest extends FormRequest
         return [
             'preferred_source' => 'nullable|string|max:255',
             'preferred_category' => 'nullable|string|max:255',
+            'preferred_author' => 'nullable|string|max:255',
         ];
     }
 
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            if (is_null($this->preferred_source) && is_null($this->preferred_category)) {
+            if (is_null($this->preferred_source) && is_null($this->preferred_category) && is_null($this->preferred_author)) {
                 $validator->errors()->add('preferences', 'At least one preference must be specified.');
             }
         });

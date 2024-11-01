@@ -10,6 +10,42 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
+    /**
+     * @OA\Post(
+     *     path="/register",
+     *     summary="Register a new user",
+     *     tags={"users"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="name", type="string", example="Reshma"),
+     *             @OA\Property(property="email", type="string", format="email", example="reshmabelman1@gmail.com"),
+     *             @OA\Property(property="password", type="string", example="Math@678")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="User registered successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="User registered successfully"),
+     *             @OA\Property(property="user", type="object",
+     *                 @OA\Property(property="name", type="string", example="Reshma"),
+     *                 @OA\Property(property="email", type="string", format="email", example="eaxmple@mail.com"),
+     *                 @OA\Property(property="updated_at", type="string", format="date-time", example="2024-10-31T22:56:43.000000Z"),
+     *                 @OA\Property(property="created_at", type="string", format="date-time", example="2024-10-31T22:56:43.000000Z"),
+     *                 @OA\Property(property="id", type="integer", example=2)
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request"
+     *     )
+     * )
+     */
+
     function register(RegisterRequest $request)
     {
         try {
@@ -19,10 +55,8 @@ class RegisterController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-            return response()->json([
-                'message' => 'User registered successfully',
-                'user' => $user
-            ], 201);
+            return response()->success($user,'User registered successfully');
+
         } catch (\Exception $e) {
             \Log::error('User Register error > ' . $e->getMessage());
             return response()->error('User Register error.');

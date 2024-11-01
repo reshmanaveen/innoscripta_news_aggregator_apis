@@ -93,7 +93,7 @@ class FetchArticles extends Command
                     'source_id' => null,
                     'published_at' => $article['published_date'] ?? null,
                     'content' => null,
-                    'category' => $article['section_name']
+                    'category' => $article['section_name']??null
                 ]
             );
         }
