@@ -17,7 +17,7 @@ Route::post('/password/email', [PasswordResetController::class, 'sendResetLinkEm
 Route::post('/password/reset', [PasswordResetController::class, 'resetPassword'])->name('password.reset');
 
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
     
         Route::get('/logout', [UserController::class, 'logout']);
 
