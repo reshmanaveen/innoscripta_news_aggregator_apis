@@ -18,29 +18,35 @@ class PasswordResetController extends Controller
         $response = Password::sendResetLink($request->only('email'));
 
         return $response === Password::RESET_LINK_SENT
-        ? response()->json(['message' => 'Reset link sent!'])
-        : response()->json(['error' => 'Failed to send reset link.'], 500);    }
+            ? response()->json(['message' => 'Reset link sent!'])
+            : response()->json(['error' => 'Failed to send reset link.'], 500);
+    }
 
     public function resetPassword(Request $request)
     {
-        $request->validate([
-            'token' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|confirmed|min:8'
+        try {
+            $request->validate([
+                'token' => 'required',
+                'email' => 'required|email',
+                'password' => 'required|confirmed|min:8'
 
-        ]);
+            ]);
 
-        $credentials = $request->only('token', 'email', 'password');
+            $credentials = $request->only('token', 'email', 'password');
 
-        $response = Password::reset($credentials, function ($user, $password) {
-            $user->password = Hash::make($password);
-            $user->save();
-        });
+            $response = Password::reset($credentials, function ($user, $password) {
+                $user->password = Hash::make($password);
+                $user->save();
+            });
 
-        if ($response === Password::PASSWORD_RESET) {
-            return response()->json(['message' => 'Password reset successfully']);
-        } else {
-            return response()->json(['error' => 'Password reset failed'], 400);
+            if ($response === Password::PASSWORD_RESET) {
+                return response()->json(['message' => 'Password reset successfully']);
+            } else {
+                return response()->json(['error' => 'Password reset failed'], 400);
+            }
+        } catch (\Exception $e) {
+            \Log::error('Reset Password error> ' . $e->getMessage());
+            return response()->error('Reset Password error.');
         }
     }
 }

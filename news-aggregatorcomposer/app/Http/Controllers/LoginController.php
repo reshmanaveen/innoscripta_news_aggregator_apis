@@ -14,21 +14,25 @@ class LoginController extends Controller
     public function login(Request $request)
 
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-    
-        // Retrieve user by credentials
-        $user = User::where('email', $request->email)->first();
-    
-        if ($user && Hash::check($request->password, $user->password)) {
-            // Create token
-            $token = $user->createToken('my-app-token')->plainTextToken;
-    
-            return response()->json(['token' => $token]);
+        try {
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
+
+            // Retrieve user by credentials
+            $user = User::where('email', $request->email)->first();
+
+            if ($user && Hash::check($request->password, $user->password)) {
+                // Create token
+                $token = $user->createToken('my-app-token')->plainTextToken;
+                return response()->success(['token' => $token]);
+            }
+
+            return response()->json(['error' => 'Invalid credentials'], 401);
+        } catch (\Exception $e) {
+            \Log::error('Login error > ' . $e->getMessage());
+            return response()->error('Login error.');
         }
-    
-        return response()->json(['error' => 'Invalid credentials'], 401);
     }
 }

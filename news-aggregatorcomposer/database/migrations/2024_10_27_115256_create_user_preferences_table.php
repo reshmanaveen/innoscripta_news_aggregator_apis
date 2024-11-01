@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('user_preferences', function (Blueprint $table) {
             $table->id();
-            $table->string('source')->nullable();
-            $table->string('category')->nullable();
+            $table->string('preferred_source')->nullable();
+            $table->string('preferred_category')->nullable();
+            $table->string('preferred_author')->nullable();
             $table->foreignId('user_id')
                 ->constrained()
                 ->cascadeOnUpdate()

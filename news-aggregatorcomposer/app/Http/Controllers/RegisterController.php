@@ -12,15 +12,20 @@ class RegisterController extends Controller
 {
     function register(RegisterRequest $request)
     {
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        try {
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
 
-        return response()->json([
-            'message' => 'User registered successfully',
-            'user' => $user
-        ], 201);
+            return response()->json([
+                'message' => 'User registered successfully',
+                'user' => $user
+            ], 201);
+        } catch (\Exception $e) {
+            \Log::error('User Register error > ' . $e->getMessage());
+            return response()->error('User Register error.');
+        }
     }
 }
