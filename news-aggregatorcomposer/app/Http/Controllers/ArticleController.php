@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -50,6 +51,12 @@ class ArticleController extends Controller
     public function index(Request $request)
     {
         try {
+
+            $currentPage = $request->page ?? 1;
+            $perPage = $request->per_page ?? 10;
+            Paginator::currentPageResolver(function () use ($currentPage){
+                return $currentPage;
+            });
             $query = Article::query();
 
             // Search functionality
@@ -70,9 +77,7 @@ class ArticleController extends Controller
                 $query->where('source_name', $request->source);
             }
 
-            // Pagination
-            $articles = $query->paginate(10); // Adjust the number of articles per page as needed
-
+            $articles = $query->paginate($perPage); 
             return response()->success($articles);
         } catch (\Exception $e) {
             \Log::error('Get Articles error > ' . $e->getMessage());
@@ -126,7 +131,7 @@ class ArticleController extends Controller
     {
         try {
             $article = Article::findOrFail($id);
-            return response()->success($article);
+            return response()->success(new ArticleResource($article));
         } catch (\Exception $e) {
             \Log::error('Show Article error > ' . $e->getMessage());
             return response()->error('Show Article error.');

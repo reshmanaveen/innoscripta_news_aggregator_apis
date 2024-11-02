@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class NewsFeedController extends Controller
 {
@@ -69,6 +70,12 @@ class NewsFeedController extends Controller
     public function index(Request $request)
     {
         try {
+            $currentPage = $request->page ?? 1;
+            $perPage = $request->per_page ?? 10;
+            Paginator::currentPageResolver(function () use ($currentPage){
+                return $currentPage;
+            });
+
             $preferences = $request->user()->preferences;
 
             $query = Article::query();
@@ -87,7 +94,7 @@ class NewsFeedController extends Controller
                 }
             }
 
-            $articles = $query->paginate(10);
+            $articles = $query->paginate($perPage);
 
             return response()->success($articles);
         } catch (\Exception $e) {
