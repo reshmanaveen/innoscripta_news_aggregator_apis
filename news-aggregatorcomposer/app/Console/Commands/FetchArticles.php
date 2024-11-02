@@ -2,8 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Article;
-use GuzzleHttp\Client;
+use App\ArticleService;
 use Illuminate\Console\Command;
 
 class FetchArticles extends Command
@@ -26,76 +25,10 @@ class FetchArticles extends Command
      */
     public function handle()
     {
-        $client = new Client();
+        $articleService = new ArticleService();
+        $articleService->fetchAndStoreArticles();
 
-        $newsApiKey = config('news.newsapi.api_key');
-        $guardianApiKey = config('news.guardian.api_key');
-        $nytApiKey =  config('news.nyt.api_key');
-
-        $newsApiResponse = $client->get('https://newsapi.org/v2/top-headlines?country=india&apiKey=' . $newsApiKey);
-        $articles = json_decode($newsApiResponse->getBody(), true)['articles'];
-
-        foreach ($articles as $article) {
-            $publishedAt = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $article['publishedAt'])->format('Y-m-d H:i:s');
-
-            Article::updateOrCreate(
-                ['title' => $article['title']],
-                [
-                    'description' => $article['description'],
-                    'url' => $article['url'],
-                    'url_to_image' => $article['urlToImage'],
-                    'author' => $article['author'],
-                    'source_name' => $article['source']['name'],
-                    'source_id' => $article['source']['id'],
-                    'published_at' => $publishedAt,
-                    'content' => $article['content'],
-                    'category' => null,
-                ]
-            );
-        }
-
-        //Fetch articles from The Guardian
-        $guardianResponse = $client->get('https://content.guardianapis.com/search?api-key=' . $guardianApiKey);
-        $guardianArticles = json_decode($guardianResponse->getBody(), true)['response']['results'];
-
-        foreach ($guardianArticles as $article) {
-            $publishedAt = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $article['webPublicationDate'])->format('Y-m-d H:i:s');
-
-            Article::updateOrCreate(
-                ['title' => $article['webTitle']],
-                [
-                    'description' => $article['fields']['trailText'] ?? null,
-                    'url' => $article['webUrl'],
-                    'url_to_image' => $article['fields']['thumbnail'] ?? null,
-                    'author' => $article['fields']['byline'] ?? null,
-                    'source_name' => 'The Guardian',
-                    'source_id' => null,
-                    'published_at' => $publishedAt,
-                    'content' => $article['fields']['body'] ?? null,
-                    'category' => $article['type']
-                ]
-            );
-        }
-
-
-        $nytResponse = $client->get('https://api.nytimes.com/svc/topstories/v2/home.json?api-key=' . $nytApiKey);
-        $nytArticles = json_decode($nytResponse->getBody(), true);
-
-        foreach ($nytArticles['results'] as $article) {
-            Article::updateOrCreate(
-                ['title' => $article['title']],
-                [
-                    'description' => $article['abstract'] ?? null,
-                    'url' => $article['url'],
-                    'url_to_image' => $article['multimedia'][0]['url'] ?? null,
-                    'author' => $article['byline'] ?? null,
-                    'source_name' => 'The New York Times',
-                    'source_id' => null,
-                    'published_at' => $article['published_date'] ?? null,
-                    'content' => null,
-                    'category' => $article['section_name']??null
-                ]
-            );
-        }
+        $this->info('Articles fetched and stored successfully.');
+       
     }
 }

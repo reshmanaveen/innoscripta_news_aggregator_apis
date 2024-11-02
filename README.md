@@ -11,7 +11,7 @@ API
 
 ## Installation
 
-artisan migrate
+/vendor/bin/sail artisan migrate:fresh --seed
 sail artisan l5-swagger:generate
 sail artisan app:fetch-articles
 

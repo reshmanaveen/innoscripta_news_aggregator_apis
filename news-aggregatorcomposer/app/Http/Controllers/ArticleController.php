@@ -131,7 +131,7 @@ class ArticleController extends Controller
     {
         try {
             $article = Article::findOrFail($id);
-            return response()->success(new ArticleResource($article));
+            return response()->success($article);
         } catch (\Exception $e) {
             \Log::error('Show Article error > ' . $e->getMessage());
             return response()->error('Show Article error.');
@@ -153,7 +153,6 @@ class ArticleController extends Controller
 
             return response()->success($preferences);
         } catch (\Exception $e) {
-            // Log the exception
             \Log::error('Error retrieving article preferences: ' . $e->getMessage());
 
             return response()->json(['error' => 'An error occurred while retrieving article preferences.'], 500);
