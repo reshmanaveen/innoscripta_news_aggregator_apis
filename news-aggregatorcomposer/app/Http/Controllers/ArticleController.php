@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -141,9 +142,19 @@ class ArticleController extends Controller
     public function getArticlePreferences()
     {
         try {
-            $preferredSources = Article::distinct()->pluck('source_name');
-            $preferredCategories = Article::distinct()->pluck('category');
-            $preferredAuthors = Article::distinct()->pluck('author');
+            $cacheTime = 60; // Cache duration in minutes
+
+            $preferredSources = Cache::remember('preferred_sources', $cacheTime, function () {
+                return Article::distinct()->pluck('source_name');
+            });
+            
+            $preferredCategories = Cache::remember('preferred_categories', $cacheTime, function () {
+                return Article::distinct()->pluck('category');
+            });
+            
+            $preferredAuthors = Cache::remember('preferred_authors', $cacheTime, function () {
+                return Article::distinct()->pluck('author');
+            });
 
             $preferences =  [
                 'preferred_sources' => $preferredSources,

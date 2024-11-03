@@ -25,7 +25,7 @@ class ArticleService
     protected function fetchNewsApiArticles()
     {
         $newsApiKey = config('news.newsapi.api_key');
-        $response = $this->client->get('https://newsapi.org/v2/top-headlines?country=india&apiKey=' . $newsApiKey);
+        $response = $this->client->get('https://newsapi.org/v2/top-headlines?country=us&apiKey=' . $newsApiKey);
         $articles = json_decode($response->getBody(), true)['articles'];
 
         foreach ($articles as $article) {

@@ -57,3 +57,31 @@ To view the API documentation, ensure the L5 Swagger package is set up, then acc
 - NEWSAPI_API_KEY=
 - GUARDIAN_API_KEY=
 - NYT_API_KEY=
+
+
+## API Collection
+
+This project includes a **Bruno API collection** that can be used to test and explore the API endpoints. Bruno is an open-source tool for managing and testing API requests efficiently.
+
+### Folder Structure
+
+The **Bruno API collection** is located in the `Bruno API Collection` folder of this repository.
+
+### How to Use the Bruno API Collection
+
+1. **Install Bruno**: Ensure you have [Bruno](https://www.usebruno.com/) installed on your system. Follow the installation guide on their [official website](https://www.usebruno.com/).
+
+2. **Import the Collection**:
+   - Open Bruno on your system.
+   - Navigate to the workspace where you want to import the collection.
+   - Click on **Import** and select the `Bruno API Collection` folder or the specific `.bru` files.
+
+3. **Explore and Test**:
+   - Once imported, you can explore the collection to see all the available API requests.
+   - Run the requests and test responses directly within Bruno.
+
+### Additional Information
+
+- Make sure you have the correct environment variables set up in Bruno if needed.
+- Customize the collection as needed for your use cases.
+
