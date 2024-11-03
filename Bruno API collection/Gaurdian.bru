@@ -1,0 +1,20 @@
+meta {
+  name: Gaurdian
+  type: http
+  seq: 9
+}
+
+get {
+  url: https://newsapi.org/v2/top-headlines?country=us&apiKey=4b76ad197ffb4b6ca909e7534bb36970
+  body: json
+  auth: bearer
+}
+
+params:query {
+  country: us
+  apiKey: 4b76ad197ffb4b6ca909e7534bb36970
+}
+
+auth:bearer {
+  token: 2|4MN2cf5nZux68xQC936XHL3iGaWXb0IijPEkxXow0fa988de
+}

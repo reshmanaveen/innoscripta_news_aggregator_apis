@@ -1,0 +1,39 @@
+meta {
+  name: GET User Preferenec
+  type: http
+  seq: 11
+}
+
+get {
+  url: http://localhost:70/api/preferences
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: 1|HIZK95aWVBKIZILAKVTn6CJStFPzADzucSPOlCrr0436a34f
+    "status": "success",
+    "data": null,
+    "message": {
+      "user_id": 2,
+      "preferred_source": "Reuters",
+      "preferred_category": null,
+      "preferred_author": "Jackie Fortiér",
+      "updated_at": "2024-11-01T13:39:52.000000Z",
+      "created_at": "2024-11-01T13:39:52.000000Z",
+      "id": 1
+    }
+  {
+    "status": "success",
+    "data": null,
+    "message": {
+      "user_id": 2,
+      "preferred_source": "Reuters",
+      "preferred_category": null,
+      "preferred_author": "Jackie Fortiér",
+      "updated_at": "2024-11-01T13:39:52.000000Z",
+      "created_at": "2024-11-01T13:39:52.000000Z",
+      "id": 1
+    }
+  }
+}

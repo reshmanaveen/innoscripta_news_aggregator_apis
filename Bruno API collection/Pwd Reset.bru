@@ -1,0 +1,24 @@
+meta {
+  name: Pwd Reset
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{localUrl}}/password/reset
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: 2|7mqyRLPReMuJXYj6A1jTTJcwpthXNUJwuAX2p867e26ccaa2
+}
+
+body:json {
+  {
+      "email": "reshmabelman@gmail.com",
+      "token": "your-reset-token",
+      "password": "password860",
+      "password_confirmation": "password860"
+  }
+}

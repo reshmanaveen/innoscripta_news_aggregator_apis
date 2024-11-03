@@ -1,0 +1,23 @@
+meta {
+  name: Get User Preferenece
+  type: http
+  seq: 13
+}
+
+get {
+  url: {{localUrl}}/preferences
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: 3|wLOvxy3Py3wA5itkp2ySu64RHM7VtE3CviR7WDCw1678c382
+}
+
+body:json {
+  {
+    "preferred_source":null,
+    "preferred_category":null,
+    "preferred_author":"By Michael Gold"
+  }
+}

@@ -1,11 +1,11 @@
 meta {
   name: User login
   type: http
-  seq: 3
+  seq: 2
 }
 
 post {
-  url: http://127.0.0.1:8000/api/login
+  url: {{localUrl}}/login
   body: json
   auth: none
 }
@@ -13,6 +13,10 @@ post {
 body:json {
   {
     "email":"reshmabelman@gmail.com",
-    "password":"Math678"
+    "password":"Math@678"
   }
+}
+
+script:post-response {
+  bru.setEnvVar('token',res.body.data.token)
 }

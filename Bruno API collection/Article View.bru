@@ -1,0 +1,15 @@
+meta {
+  name: Article View
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{localUrl}}/articles/1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: 1|HIZK95aWVBKIZILAKVTn6CJStFPzADzucSPOlCrr0436a34f
+}

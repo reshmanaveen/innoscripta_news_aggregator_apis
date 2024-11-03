@@ -1,0 +1,15 @@
+meta {
+  name: User NewsFeed
+  type: http
+  seq: 12
+}
+
+get {
+  url: {{localUrl}}/news-feed
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: 4|mcG4w5NujftpLK76Y8g4DarphHS3aV74SCuvYwlR67534803
+}
